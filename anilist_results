@@ -1,1 +1,41 @@
 import requests
+
+# First of all we need the query to be sent to post
+# In the query parameters, you need to set the variables you define inside the fields first. So $search in media has a corresponding $search: String! in the query parameters
+# Their value is their type.
+query = '''
+query ($search: String!, $perPage: Int) {
+  Page (perPage: $perPage) {
+    media(search: $search, type: ANIME) {
+      id
+      title {
+        english
+      }
+      averageScore
+    }
+  }
+}
+'''
+
+# And then for the variables that we created in the query (see names with $ on them), we need to create the corresp. variables
+
+variables = {
+    'search': 'Overlord',
+    'perPage': 3
+}
+
+# Get the base url that we send the post request unto
+base_url = 'https://graphql.anilist.co'
+
+
+# Make the request
+response = requests.post(base_url, json={'query': query, 'variables': variables})
+
+data = response.json()
+
+anime_results = data["data"]["Page"]["media"]
+
+anime_specific_data = anime_results[0]
+
+print(anime_results)
+print(anime_specific_data)
