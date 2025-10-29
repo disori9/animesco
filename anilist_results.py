@@ -1,7 +1,7 @@
 import requests
 
 def search_results(animes_found):
-	print("/n--- Search Results ---")
+	print("\n--- Search Results ---")
 
 	for index, anime in enumerate(animes_found):
 		print(f"Anime [{index}]: {anime["title"]["english"]}")
@@ -75,6 +75,3 @@ def get_anilist_score(anime_title):
     anime_data = get_anilist_data(anime_title)
     anilist_score = anime_data.get("averageScore") / 10.0
     return anilist_score
-
-score = get_anilist_score("Overlord")
-print(score)

@@ -4,7 +4,7 @@ def search_results(animes_found):
 	# The problem was basically how do I make sure that when the user searches for a show with an incomplete name, they'll get the result they want
 	# The solution was to show the user the top 5 results with their corresponding index and then ask the user for what show they want, getting the index from them
 	# Then getting the data from that index to have a variable which holds the show's data
-	print("/n--- Search Results ---")
+	print("\n--- Search Results ---")
 	for index, anime in enumerate(animes_found["data"]):
 		print(f"Anime [{index}]: {anime["title"]} (MAL ID: {anime["mal_id"]})")
 	while True:
@@ -49,10 +49,6 @@ def get_mal_score(anime_title):
 	anime_data = get_mal_data(anime_title)
 	mal_score = anime_data.get("score")
 	return mal_score
-
-
-score = get_mal_score("Overlord")
-print(score)
 
 	# .get basically gets the data from a key 
 	# mal_score = anime_data.get("score")
