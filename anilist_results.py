@@ -1,21 +1,5 @@
 import requests
 
-def search_results(animes_found):
-	print("\n--- Search Results ---")
-
-	for index, anime in enumerate(animes_found):
-		print(f"Anime [{index}]: {anime["title"]["english"]}")
-
-	while True:
-		try:
-			anime_selected = int(input("\nPlease input the number of the title you want: "))
-			anime_data = animes_found[anime_selected]
-			break
-		except(ValueError, IndexError):
-			print("Invalid input. Please enter the number beside Anime[#]")
-
-	return anime_data
-
 def get_anilist_data(anime_title):
 	# First of all we need the query to be sent to post
 	# In the query parameters, you need to set the variables you define inside the fields first. So $search in media has a corresponding $search: String! in the query parameters
@@ -53,8 +37,8 @@ def get_anilist_data(anime_title):
 		if not data.get("data"):
 			print(f"No results found for '{anime_title}'. Exiting.")
 		else:
-			anime_results = data["data"]["Page"]["media"]
-			anime_data = search_results(anime_results)
+			anime_results = data["data"]["Page"]["media"][0]
+			anime_data = anime_results
    
 			return anime_data
 			
