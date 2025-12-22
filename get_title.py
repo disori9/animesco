@@ -35,3 +35,27 @@ def get_verified_title():
 		return None
 
 	return anime_title
+
+def top_search_results(query):
+	base_url = "https://api.jikan.moe/v4/anime"
+
+	params = {
+		"q": query,
+		"limit": 5
+	}
+
+	response = requests.get(base_url, params=params)
+
+	if response.status_code == 200:
+		
+		animes_found = response.json()
+		candidates = []
+
+		for anime in animes_found["data"]:
+			anime_data = {'mal_id': anime['mal_id'], 'title': anime['title']}
+			candidates.append(anime_data)
+	else:
+		print(f"Request failed with status code: {response.status_code}")
+		return None
+
+	return candidates
