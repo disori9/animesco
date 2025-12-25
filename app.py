@@ -16,5 +16,13 @@ def search():
     titles = top_search_results(user_input)
     return render_template('results.html', titles=titles)
 
+@app.route('/score', methods=['POST'])
+def score():
+    anime_title = request.form['anime_title']
+    mal_score = get_mal_score(anime_title)
+    anilist_score = get_anilist_score(anime_title)
+    average_score = (mal_score + anilist_score) / 2
+    return f"{anime_title}: {average_score} rating."
+
 if __name__ == '__main__':
     app.run(debug=True)
