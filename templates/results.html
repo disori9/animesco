@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+    <ul> 
+		{% for title in titles %}
+		<li>
+			<form action="/score" method="POST">
+				<input type="hidden" name="anime_title" value="{{ title.title }}">
+				<button type="submit">{{ title.title }}</button>
+			</form>
+		</li>
+		{% endfor %}
+	</ul>
+</body>
+</html>
