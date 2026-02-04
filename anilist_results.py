@@ -33,27 +33,19 @@ def get_anilist_data(anime_title):
 
 	if response.status_code == 200:
 		data = response.json()
+
+		media_list = data["data"]["Page"]["media"]
 		
-		if not data.get("data"):
-			print(f"No results found for '{anime_title}'. Exiting.")
-		else:
-			anime_results = data["data"]["Page"]["media"][0]
-			anime_data = anime_results
+		if not media_list:
+			raise ValueError(f"No results found for {anime_title}")
+		
+		anime_results = media_list[0]
+		anime_data = anime_results
    
-			return anime_data
-			
-			# anilist_score = anime_data.get("averageScore") / 10.0
-			# anilist_id = anime_data.get("id")
-			# anilist_title = anime_data.get("title").get("english")
-			
-			# print("\n--- AniList Data ---")
-			# print(f"Selected Anime: {anilist_title}")
-			# print(f"AniList Score: {anilist_score}")
-			# print(f"Unique AniList ID: {anilist_id}")
+		return anime_data
 
 	else:
-		print(f"Request failed with status code: {response.status_code}")
-		return None
+		raise ConnectionError("Cannot connect to the database")
 
 def get_anilist_score(anime_title):
     anime_data = get_anilist_data(anime_title)

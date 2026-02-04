@@ -1,6 +1,6 @@
 import requests
 
-def get_mal_data(anime_title):
+def make_api_request(anime_title):
 
 	base_url = "https://api.jikan.moe/v4/anime"
 	# anime_title = input("Please input your title, accurate title produces accurate results: ")
@@ -18,26 +18,16 @@ def get_mal_data(anime_title):
 		animes_found = response.json()
 		
 		if not animes_found.get("data"):
-			print(f"No results found for '{anime_title}'. Exiting.")
-		else:
-			anime_data = animes_found["data"][0]
+			raise ValueError(f"No results found for {anime_title}")
+		
+		anime_data = animes_found["data"][0]
 
 		return anime_data
 			
 	else:
-		print(f"Request failed with status code: {response.status_code}")
-		return None
+		raise ConnectionError("Cannot connect to the database")
 
-def get_mal_score(anime_title):
-	anime_data = get_mal_data(anime_title)
-	mal_score = anime_data.get("score")
-	return mal_score
+def get_mal_data(anime_title):
+	mal_data = make_api_request(anime_title)
 
-	# .get basically gets the data from a key 
-	# mal_score = anime_data.get("score")
-	# mal_id = anime_data.get("mal_id")
-
-	# print("\n--- MyAnimeList Data ---")
-	# print(f"Selected Anime: {anime_data["title"]}")
-	# print(f"MAL Score: {mal_score}")
-	# print(f"Unique MAL ID: {mal_id}")
+	return mal_data

@@ -18,11 +18,19 @@ def search():
 
 @app.route('/score', methods=['POST'])
 def score():
-    anime_title = request.form['anime_title']
-    mal_score = get_mal_score(anime_title)
-    anilist_score = get_anilist_score(anime_title)
-    average_score = (mal_score + anilist_score) / 2
-    return f"{anime_title}: {average_score} rating."
+    try:
+        anime_title = request.form['anime_title']
+
+        mal_score = get_mal_score(anime_title)
+        anilist_score = get_anilist_score(anime_title)
+        
+        average_score = (mal_score + anilist_score) / 2
+        
+        return f"{anime_title}: {average_score} rating."
+    except ValueError as e:
+        return f"<h1>Error</h1> <p>{e}</p> <a href='/'>Go Back</a>"
+    except Exception as e:
+        return f"<h1>System Error</h1> <p>Something went wrong: {e}</p> <a href='/'>Go Back</a>"
 
 if __name__ == '__main__':
     app.run(debug=True)
