@@ -21,12 +21,16 @@ def score():
     try:
         anime_title = request.form['anime_title']
 
-        mal_score = get_mal_score(anime_title)
+        mal_data = get_mal_data(anime_title)
+        mal_score = mal_data.get("score")
+        mal_cover = mal_data["images"]["jpg"]["image_url"]
+
         anilist_score = get_anilist_score(anime_title)
         
         average_score = (mal_score + anilist_score) / 2
         
-        return f"{anime_title}: {average_score} rating."
+        return render_template('score.html', anime_title=anime_title, average_score=average_score, mal_cover=mal_cover,
+                               mal_score=mal_score, anilist_score=anilist_score)
     except ValueError as e:
         return f"<h1>Error</h1> <p>{e}</p> <a href='/'>Go Back</a>"
     except Exception as e:
