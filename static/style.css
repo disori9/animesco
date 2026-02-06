@@ -22,6 +22,20 @@ body {
     border: 1px solid #2a2b3d; /* Subtle border for definition */
 }
 
+/* A wider version of the card for the results grid */
+.card-wide {
+    background-color: #151621;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+    text-align: center;
+    border: 1px solid #2a2b3d;
+    
+    /* THE CHANGE: */
+    max-width: 1200px; /* Much wider! */
+    width: 95%;
+}
+
 /* 3. Typography */
 h1 {
     margin-bottom: 20px;
@@ -101,4 +115,170 @@ button:hover, .btn:hover {
     padding: 15px;
     border-radius: 8px;
     margin: 20px 0;
+}
+
+/* --- Expander / Read More Styling --- */
+
+.synopsis-container {
+    margin-top: 10px;
+    border-top: 1px solid #33344a; /* Separator line */
+    padding-top: 0px;
+    text-align: left; /* Synopsis is better left-aligned */
+}
+
+/* State A: Collapsed (The default) */
+.synopsis-collapsed {
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Show only 3 lines */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis; /* Adds '...' at the end */
+    color: #a0a0b0;
+    margin-bottom: 5px;
+}
+
+/* State B: Expanded (When button is clicked) */
+.synopsis-expanded {
+    display: block; /* Show everything */
+    color: #e0e0e0;
+    margin-bottom: 10px;
+}
+
+/* The 'Read More' Link Button */
+.read-more-btn {
+    background: none;
+    border: none;
+    color: #7c4dff; /* Neon Purple */
+    cursor: pointer;
+    padding: 0;
+    font-size: 0.9rem;
+    font-weight: bold;
+    text-decoration: none;
+    width: auto; /* Don't stretch across the screen */
+    text-align: left;
+}
+
+.read-more-btn:hover {
+    background: none;
+    color: #9e7dff; /* Lighter purple on hover */
+    transform: none; /* No movement needed here */
+    text-decoration: underline;
+}
+
+/* Search again button */
+a.btn {
+    background-color: transparent; /* No background */
+    border: 1px solid #33344a;     /* Subtle border */
+    color: #a0a0b0;                /* Muted text color */
+    margin-top: 10px;              /* Small gap */
+}
+
+a.btn:hover {
+    background-color: #1f2030;     /* Slight highlight on hover */
+    border-color: #7c4dff;         /* Purple border on hover */
+    color: #ffffff;                /* White text on hover */
+    transform: translateY(-2px);
+}
+
+/* --- Side-by-Side Score Grid --- */
+
+.score-row {
+    display: flex;             /* This makes them sit side-by-side */
+    gap: 15px;                 /* Space between the two boxes */
+    margin-bottom: 20px;       /* Space below the boxes */
+    justify-content: center;
+}
+
+.score-box {
+    background-color: #0b0c15; /* Darker than the main card for contrast */
+    border: 1px solid #33344a;
+    border-radius: 10px;
+    padding: 15px 10px;
+    flex: 1;                   /* This ensures they are both equal width */
+    text-align: center;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.5); /* Inner shadow for depth */
+}
+
+.score-label {
+    display: block;            /* Put label on its own line */
+    font-size: 0.85rem;
+    color: #a0a0b0;            /* Muted text */
+    margin-bottom: 5px;
+    text-transform: uppercase; /* Makes it look like a header */
+    letter-spacing: 1px;
+}
+
+.score-value {
+    display: block;            /* Put number on its own line */
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+/* The container that holds all cards */
+.results-grid {
+    display: flex;             /* This aligns items horizontally */
+    flex-wrap: wrap;           /* This lets them drop to the next line if screen is narrow */
+    justify-content: center;   /* Centers the grid on the screen */
+    gap: 20px;                 /* Adds space between the cards */
+    padding: 20px;             /* Adds breathing room around the edges */
+}
+
+/* This class makes a button look like a card */
+.search-card-clickable {
+    /* 1. Reset default button styles */
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    font-family: inherit; /* Keep your font */
+
+    /* 2. Apply the Card Look */
+    background-color: #151621;
+    border: 1px solid #33344a;
+    border-radius: 10px;
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    transition: transform 0.2s, box-shadow 0.2s;
+    overflow: hidden; /* Keeps content inside rounded corners */
+}
+
+/* Hover Effect: Lift the whole card up */
+.search-card-clickable:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(124, 77, 255, 0.3); /* Purple glow */
+    border-color: #7c4dff;
+}
+
+/* Image Styling */
+.search-card-clickable img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    margin-bottom: 0; /* Image touches the text box directly */
+}
+
+/* Text Container Styling */
+.search-info {
+    padding: 15px;
+    width: 100%;
+    box-sizing: border-box; /* Ensures padding doesn't break width */
+}
+
+.search-info h3 {
+    font-size: 1rem;
+    margin: 5px 0;
+    color: #fff;
+    pointer-events: none; /* Prevents text selection flickering on click */
+}
+
+.search-info p {
+    font-size: 0.8rem;
+    color: #a0a0b0;
+    margin: 0;
+    pointer-events: none;
 }

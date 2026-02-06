@@ -14,7 +14,7 @@ def home():
 def search():
     user_input = request.form['anime_title']
     titles = top_search_results(user_input)
-    return render_template('results.html', titles=titles)
+    return render_template('search_results.html', titles=titles)
 
 @app.route('/score', methods=['POST'])
 def score():
@@ -24,13 +24,14 @@ def score():
         mal_data = get_mal_data(anime_title)
         mal_score = mal_data.get("score")
         mal_cover = mal_data["images"]["jpg"]["image_url"]
+        synopsis = mal_data["synopsis"]
 
         anilist_score = get_anilist_score(anime_title)
         
         average_score = (mal_score + anilist_score) / 2
         
         return render_template('score.html', anime_title=anime_title, average_score=average_score, mal_cover=mal_cover,
-                               mal_score=mal_score, anilist_score=anilist_score)
+                               mal_score=mal_score, anilist_score=anilist_score, synopsis=synopsis)
     except ValueError as e:
         return f"<h1>Error</h1> <p>{e}</p> <a href='/'>Go Back</a>"
     except Exception as e:

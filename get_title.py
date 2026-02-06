@@ -52,7 +52,7 @@ def top_search_results(query):
 		candidates = []
 
 		for anime in animes_found["data"]:
-			anime_data = {'mal_id': anime['mal_id'], 'title': anime['title']}
+			anime_data = {'mal_id': anime['mal_id'], 'title': anime['title'], 'cover': anime["images"]["jpg"]["image_url"], 'synopsis': anime["synopsis"]}
 			candidates.append(anime_data)
 	else:
 		print(f"Request failed with status code: {response.status_code}")

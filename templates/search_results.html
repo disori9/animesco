@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Select Anime</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="card-wide">
+        <h1>Did you mean...</h1>
+		<div class="results-grid">
+			{% for title in titles %}
+			
+			<form action="/score" method="POST" style="display: contents;">
+				<input type="hidden" name="anime_title" value="{{ title.title }}">
+				
+				<button type="submit" class="search-card-clickable">
+					
+					<img src="{{ title.cover }}" alt="cover">
+					
+					<div class="search-info">
+						<h3>{{ title.title }}</h3>
+						<p>{{ title.synopsis[:100] }}...</p>
+					</div>
+					
+				</button>
+			</form>
+
+			{% endfor %}
+		</div>
+        <br>
+        <a href="/" style="color: #666; font-size: 0.9rem; text-decoration: none;">Cancel</a>
+    </div>
+</body>
+</html>

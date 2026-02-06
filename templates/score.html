@@ -14,12 +14,49 @@
         </div>
 
         <div class="details">
-            <p>MAL Score: {{ mal_score }}</p>
-            <p>AniList Score: {{ anilist_score }}</p>
+            <div class="score-row">
+                <div class="score-box">
+                    <span class="score-label">MAL Score</span>
+                    <span class="score-value">{{ mal_score }}</span>
+                </div>
+
+                <div class="score-box">
+                    <span class="score-label">AniList Score</span>
+                    <span class="score-value">{{ anilist_score }}</span>
+                </div>
+            </div>
+            
+            <div class="synopsis-container">
+                <p><strong>Synopsis:</strong></p>
+                <p id="synopsisText" class="synopsis-collapsed">
+                    {{ synopsis }}
+                </p>
+                <button id="toggleBtn" class="read-more-btn" onclick="toggleSynopsis()">Read More</button>
+            </div>
         </div>
 
         <a href="/" class="btn">Search Another</a>
     </div>
+
+    <script>
+        function toggleSynopsis() {
+            var text = document.getElementById("synopsisText");
+            var btn = document.getElementById("toggleBtn");
+
+            // Check if it is currently collapsed
+            if (text.classList.contains("synopsis-collapsed")) {
+                // Expand it
+                text.classList.remove("synopsis-collapsed");
+                text.classList.add("synopsis-expanded");
+                btn.innerText = "Read Less"; // Change button text
+            } else {
+                // Collapse it
+                text.classList.remove("synopsis-expanded");
+                text.classList.add("synopsis-collapsed");
+                btn.innerText = "Read More"; // Reset button text
+            }
+        }
+    </script>
 </body>
 </html>
 
