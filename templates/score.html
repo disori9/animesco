@@ -2,15 +2,24 @@
 <html>
 <head>
     <title>Anime Scorer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <img src="{{ mal_cover }}"></img>
-    <h1>{{ anime_title }} Average: {{ average_score }}</h1>
-    <h2>MAL Score: {{ mal_score }}</h2>
-    <h2> AniList Score: {{ anilist_score }}</h2>
+    <div class="card">
+        <img src="{{ mal_cover }}" alt="Anime Cover">
+        <h1>{{ anime_title }}</h1>
+        
+        <div class="score-highlight">
+            Average Score: {{ average_score }}
+        </div>
 
-    <br>
-    <a href="/">Search Again</a>
+        <div class="details">
+            <p>MAL Score: {{ mal_score }}</p>
+            <p>AniList Score: {{ anilist_score }}</p>
+        </div>
+
+        <a href="/" class="btn">Search Another</a>
+    </div>
 </body>
 </html>
 

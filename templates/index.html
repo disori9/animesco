@@ -2,12 +2,17 @@
 <html>
 <head>
     <title>Anime Scorer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Compare Anime Scores</h1>
-    <form action="/search" method="POST">
-        <input type="text" name="anime_title" placeholder="Enter show name..." required>
-        <button type="submit">Get Scores</button>
-    </form>
+    <div class="card">
+        <h1>Anime Scorer</h1>
+        <p>Compare scores from MAL and AniList</p>
+        <br>
+        <form action="/search" method="POST">
+            <input type="text" name="anime_title" placeholder="Enter Anime Title..." required>
+            <button type="submit">Search</button>
+        </form>
+    </div>
 </body>
 </html>
