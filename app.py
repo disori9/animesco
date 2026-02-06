@@ -30,7 +30,7 @@ def score():
         
         average_score = (mal_score + anilist_score) / 2
         
-        return render_template('score.html', anime_title=anime_title, average_score=average_score, mal_cover=mal_cover,
+        return render_template('selected_anime.html', anime_title=anime_title, average_score=average_score, mal_cover=mal_cover,
                                mal_score=mal_score, anilist_score=anilist_score, synopsis=synopsis)
     except ValueError as e:
         return f"<h1>Error</h1> <p>{e}</p> <a href='/'>Go Back</a>"
