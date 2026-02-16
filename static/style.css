@@ -38,9 +38,13 @@ body {
 
 /* 3. Typography */
 h1 {
-    margin-bottom: 20px;
     color: #ffffff;
     font-weight: 600;
+    line-height: 1.2; /* Tightens the text height itself */
+    
+    /* CHANGED: Removed top margin, reduced bottom from 20px to 5px */
+    margin-top: 0;
+    margin-bottom: 8px; 
 }
 
 p {
@@ -102,7 +106,9 @@ button:hover, .btn:hover {
     max-width: 100%;
     height: auto;
     box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-    margin-bottom: 20px;
+    
+    /* CHANGED: Reduced from 20px to 10px */
+    margin-bottom: 10px; 
 }
 
 /* 8. Score Box (Specific to Score Page) */
@@ -281,4 +287,50 @@ a.btn:hover {
     color: #a0a0b0;
     margin: 0;
     pointer-events: none;
+}
+
+/* --- Metadata (Status & Genres) --- */
+
+.metadata-row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    /* CHANGED: Reduced gap between Status and Genres to 5px */
+    gap: 5px; 
+    
+    /* Keeps a healthy gap before the Score starts */
+    margin-bottom: 25px; 
+}
+
+/* Status Badge (e.g., "Finished Airing") */
+.status-badge {
+    background-color: #2c2d42;
+    color: #a0a0b0;
+    font-size: 0.8rem;
+    padding: 5px 12px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: 1px solid #33344a;
+}
+
+/* Container for the Genre tags */
+.genre-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px; /* Space between tags */
+    margin-top: 10px;
+}
+
+/* Individual Genre Tag */
+.genre-tag {
+    background-color: rgba(124, 77, 255, 0.1); /* Very faint purple background */
+    color: #9e7dff;       /* Light Purple text */
+    border: 1px solid #7c4dff;
+    padding: 4px 10px;
+    border-radius: 15px;  /* Fully rounded pill shape */
+    font-size: 0.8rem;
+    font-weight: 500;
 }

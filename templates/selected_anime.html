@@ -8,7 +8,15 @@
     <div class="card">
         <img src="{{ mal_cover }}" alt="Anime Cover">
         <h1>{{ anime_title }}</h1>
-        
+        <div class="metadata-row">
+            <span class="status-badge">{{ mal_status }}</span>
+            
+            <div class="genre-container">
+                {% for genre in mal_genres %}
+                    <span class="genre-tag">{{ genre }}</span>
+                {% endfor %}
+            </div>
+        </div>
         <div class="score-highlight">
             Average Score: {{ average_score }}
         </div>
