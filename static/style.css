@@ -326,11 +326,30 @@ a.btn:hover {
 
 /* Individual Genre Tag */
 .genre-tag {
-    background-color: rgba(124, 77, 255, 0.1); /* Very faint purple background */
-    color: #9e7dff;       /* Light Purple text */
+    background-color: rgba(124, 77, 255, 0.1); 
+    color: #9e7dff;       
     border: 1px solid #7c4dff;
     padding: 4px 10px;
-    border-radius: 15px;  /* Fully rounded pill shape */
+    
+    /* CHANGED: From 15px (Pill) to 6px (Curved Rectangle) */
+    border-radius: 6px;
+    
     font-size: 0.8rem;
     font-weight: 500;
+}
+
+/* The container for the new info line */
+.sub-details {
+    color: #a0a0b0;  /* Muted grey */
+    font-size: 0.9rem;
+    margin-top: 5px; /* Tiny space below status */
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* The dot between the two items */
+.separator {
+    color: #33344a; /* Very subtle dark dot */
+    font-weight: bold;
 }

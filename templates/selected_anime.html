@@ -11,6 +11,12 @@
         <div class="metadata-row">
             <span class="status-badge">{{ mal_status }}</span>
             
+            <div class="sub-details">
+                <span>{{ mal_episodes }} Episodes</span>
+                <span class="separator">•</span>
+                <span>{{ mal_date }}</span>
+            </div>
+
             <div class="genre-container">
                 {% for genre in mal_genres %}
                     <span class="genre-tag">{{ genre }}</span>
