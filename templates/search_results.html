@@ -11,17 +11,16 @@
 			{% for title in titles %}
 			
 			<form action="/score" method="POST" style="display: contents;">
+				<input type="hidden" name="mal_id" value="{{ title.mal_id }}">
+				
 				<input type="hidden" name="anime_title" value="{{ title.title }}">
 				
 				<button type="submit" class="search-card-clickable">
-					
 					<img src="{{ title.cover }}" alt="cover">
-					
 					<div class="search-info">
 						<h3>{{ title.title }}</h3>
 						<p>{{ title.synopsis[:100] }}...</p>
 					</div>
-					
 				</button>
 			</form>
 

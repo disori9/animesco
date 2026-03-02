@@ -27,6 +27,7 @@ def score():
         mal_status = mal_data["status"]
         mal_episodes = mal_data["episodes"]
         mal_date = mal_data["aired"]["string"]
+        mal_id = mal_data["mal_id"]
         
         mal_genres = []
         for genre in mal_data["genres"]:
@@ -34,7 +35,7 @@ def score():
 
         synopsis = mal_data["synopsis"]
 
-        anilist_score = get_anilist_score(anime_title)
+        anilist_score = get_anilist_score(mal_id)
         
         average_score = (mal_score + anilist_score) / 2
         
