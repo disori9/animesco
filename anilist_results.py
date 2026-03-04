@@ -92,12 +92,13 @@ def get_anilist_recommendations(mal_id):
 		
 		recommendations = []
 		for rec in anime_data['recommendations']['nodes']:
+			if not rec.get('mediaRecommendation') or not rec['mediaRecommendation'].get('idMal'):
+				continue
+		
 			recommendation = {}
 			rec_info = rec['mediaRecommendation']
 			rating = rec['rating']
 
-			if not rec.get('mediaRecommendation') or not rec['mediaRecommendation'].get('idMal'):
-				continue
 			recommendation['mal_id'] = rec_info['idMal']
 			recommendation['title'] = rec_info['title']['romaji']
 			recommendation['cover'] = rec_info['coverImage']['large']
