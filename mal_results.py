@@ -48,3 +48,47 @@ def get_anime_by_id(mal_id):
             
     else:
         raise ConnectionError("Cannot connect to the database")
+	
+
+def get_mal_recommendations(mal_id):
+	base_url = f"https://api.jikan.moe/v4/anime/{mal_id}/recommendations"
+
+	response = requests.get(base_url)
+
+	if response.status_code == 200:
+		data = response.json()
+		if not data.get("data"):
+			raise ValueError(f"No results found for ID {mal_id}")
+
+		recommendations = []
+		for rec in data["data"]:
+			entry = rec["entry"]
+			votes = rec["votes"]
+
+			recommendation = {}
+			recommendation["mal_id"] = entry["mal_id"]
+			recommendation["title"] = entry["title"]
+			recommendation["cover"] = entry["images"]["jpg"]["image_url"]
+			recommendation['votes'] = votes
+			recommendations.append(recommendation)
+
+		return recommendations
+	else:
+		raise ConnectionError("Cannot connect to the database")
+	
+
+
+if __name__ == "__main__":
+    # This block only runs if you execute THIS file directly.
+    # It won't run when app.py imports it.
+    
+    print("Testing Jikan Recommendations...")
+    try:
+        # Let's test with ID 37430 (That Time I Got Reincarnated as a Slime)
+        test_data = get_mal_recommendations(37430)
+        
+        for item in test_data:
+            print(f"Title: {item['title']}, Votes: {item['votes']}")
+            
+    except Exception as e:
+        print(f"Error: {e}")
