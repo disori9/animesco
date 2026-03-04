@@ -20,14 +20,14 @@ def search():
 def score():
     try:
         anime_title = request.form['anime_title']
-
-        mal_data = get_mal_data(anime_title)
+        mal_id = request.form['mal_id']
+        mal_data = get_anime_by_id(mal_id)
+        
         mal_score = mal_data.get("score")
         mal_cover = mal_data["images"]["jpg"]["image_url"]
         mal_status = mal_data["status"]
         mal_episodes = mal_data["episodes"]
         mal_date = mal_data["aired"]["string"]
-        mal_id = mal_data["mal_id"]
         
         mal_genres = []
         for genre in mal_data["genres"]:

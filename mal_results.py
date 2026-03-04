@@ -31,3 +31,20 @@ def get_mal_data(anime_title):
 	mal_data = make_api_request(anime_title)
 
 	return mal_data
+
+def get_anime_by_id(mal_id):
+    """Fetches exact anime details from Jikan using the MAL ID."""
+    base_url = f"https://api.jikan.moe/v4/anime/{mal_id}"
+    
+    response = requests.get(base_url)
+    
+    if response.status_code == 200:
+        data = response.json()
+        if not data.get("data"):
+            raise ValueError(f"No results found for ID {mal_id}")
+        
+        # returns exactly one dictionary
+        return data["data"] 
+            
+    else:
+        raise ConnectionError("Cannot connect to the database")
