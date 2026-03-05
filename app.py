@@ -2,6 +2,7 @@ from flask import Flask, render_template, request
 from get_title import top_search_results
 from mal_results import *
 from anilist_results import *
+from recommender import *
 
 app = Flask(__name__)
 
@@ -38,10 +39,13 @@ def score():
         anilist_score = get_anilist_score(mal_id)
         
         average_score = (mal_score + anilist_score) / 2
+
+        recommendations = get_smart_recommendations(mal_id)
         
         return render_template('selected_anime.html', anime_title=anime_title, average_score=average_score, mal_cover=mal_cover,
                                mal_score=mal_score, anilist_score=anilist_score, synopsis=synopsis, mal_status=mal_status, mal_genres=mal_genres,
-                               mal_episodes=mal_episodes, mal_date=mal_date)
+                               mal_episodes=mal_episodes, mal_date=mal_date,
+                               recommendations=recommendations)
     except ValueError as e:
         return f"<h1>Error</h1> <p>{e}</p> <a href='/'>Go Back</a>"
     except Exception as e:

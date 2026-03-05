@@ -5,51 +5,84 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <div class="card">
-        <img src="{{ mal_cover }}" alt="Anime Cover">
-        <h1>{{ anime_title }}</h1>
-        <div class="metadata-row">
-            <span class="status-badge">{{ mal_status }}</span>
-            
-            <div class="sub-details">
-                <span>{{ mal_episodes }} Episodes</span>
-                <span class="separator">•</span>
-                <span>{{ mal_date }}</span>
-            </div>
+    
+    <div class="page-split-layout">
+        <div class="left-column">
+            <div class="card">
+                <img src="{{ mal_cover }}" alt="Anime Cover">
+                <h1>{{ anime_title }}</h1>
+                <div class="metadata-row">
+                    <span class="status-badge">{{ mal_status }}</span>
+                    
+                    <div class="sub-details">
+                        <span>{{ mal_episodes }} Episodes</span>
+                        <span class="separator">•</span>
+                        <span>{{ mal_date }}</span>
+                    </div>
 
-            <div class="genre-container">
-                {% for genre in mal_genres %}
-                    <span class="genre-tag">{{ genre }}</span>
+                    <div class="genre-container">
+                        {% for genre in mal_genres %}
+                            <span class="genre-tag">{{ genre }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="score-highlight">
+                    Average Score: {{ average_score }}
+                </div>
+
+                <div class="details">
+                    <div class="score-row">
+                        <div class="score-box">
+                            <span class="score-label">MAL Score</span>
+                            <span class="score-value">{{ mal_score }}</span>
+                        </div>
+
+                        <div class="score-box">
+                            <span class="score-label">AniList Score</span>
+                            <span class="score-value">{{ anilist_score }}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="synopsis-container">
+                        <p><strong>Synopsis:</strong></p>
+                        <p id="synopsisText" class="synopsis-collapsed">
+                            {{ synopsis }}
+                        </p>
+                        <button id="toggleBtn" class="read-more-btn" onclick="toggleSynopsis()">Read More</button>
+                    </div>
+                </div>
+
+                <a href="/" class="btn">Search Another</a>
+            </div>
+        </div>
+        <div class="right-column">
+            <div class="section-header">
+                <h2>Similar Anime</h2>
+                <hr class="header-line">
+            </div>
+            
+            <div class="recs-grid-vertical">
+                {% for rec in recommendations %}
+                <form action="/score" method="POST" style="display: contents;">
+                    <input type="hidden" name="mal_id" value="{{ rec.mal_id }}">
+                    <input type="hidden" name="anime_title" value="{{ rec.title }}">
+                    
+                    <button type="submit" class="search-card-clickable mini-card">
+                        <img src="{{ rec.cover }}" alt="cover">
+                        <div class="search-info">
+                            <h3>{{ rec.title }}</h3>
+                            
+                            <div class="rec-badge">
+                                <span class="rec-label">Score</span>
+                                <span class="rec-value">{{ rec.smart_score }}</span>
+                            </div>
+
+                        </div>
+                    </button>
+                </form>
                 {% endfor %}
             </div>
         </div>
-        <div class="score-highlight">
-            Average Score: {{ average_score }}
-        </div>
-
-        <div class="details">
-            <div class="score-row">
-                <div class="score-box">
-                    <span class="score-label">MAL Score</span>
-                    <span class="score-value">{{ mal_score }}</span>
-                </div>
-
-                <div class="score-box">
-                    <span class="score-label">AniList Score</span>
-                    <span class="score-value">{{ anilist_score }}</span>
-                </div>
-            </div>
-            
-            <div class="synopsis-container">
-                <p><strong>Synopsis:</strong></p>
-                <p id="synopsisText" class="synopsis-collapsed">
-                    {{ synopsis }}
-                </p>
-                <button id="toggleBtn" class="read-more-btn" onclick="toggleSynopsis()">Read More</button>
-            </div>
-        </div>
-
-        <a href="/" class="btn">Search Another</a>
     </div>
 
     <script>
@@ -57,20 +90,16 @@
             var text = document.getElementById("synopsisText");
             var btn = document.getElementById("toggleBtn");
 
-            // Check if it is currently collapsed
             if (text.classList.contains("synopsis-collapsed")) {
-                // Expand it
                 text.classList.remove("synopsis-collapsed");
                 text.classList.add("synopsis-expanded");
-                btn.innerText = "Read Less"; // Change button text
+                btn.innerText = "Read Less"; 
             } else {
-                // Collapse it
                 text.classList.remove("synopsis-expanded");
                 text.classList.add("synopsis-collapsed");
-                btn.innerText = "Read More"; // Reset button text
+                btn.innerText = "Read More"; 
             }
         }
     </script>
 </body>
 </html>
-

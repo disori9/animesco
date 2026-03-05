@@ -4,10 +4,12 @@ body {
     color: #e0e0e0;            /* Soft White text */
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: center; /* Horizontally centers content */
+    align-items: flex-start; /* Aligns to top so scroll works properly */
     min-height: 100vh;
     margin: 0;
+    padding-top: 40px; /* Gives some breathing room at the top */
+    padding-bottom: 40px;
 }
 
 /* 2. The Card Container (Shared by all pages) */
@@ -20,6 +22,7 @@ body {
     max-width: 400px;
     width: 90%;
     border: 1px solid #2a2b3d; /* Subtle border for definition */
+    margin: 0 auto; /* Centers the card horizontally */
 }
 
 /* A wider version of the card for the results grid */
@@ -30,19 +33,16 @@ body {
     box-shadow: 0 15px 40px rgba(0,0,0,0.6);
     text-align: center;
     border: 1px solid #2a2b3d;
-    
-    /* THE CHANGE: */
     max-width: 1200px; /* Much wider! */
     width: 95%;
+    margin: 0 auto;
 }
 
 /* 3. Typography */
 h1 {
     color: #ffffff;
     font-weight: 600;
-    line-height: 1.2; /* Tightens the text height itself */
-    
-    /* CHANGED: Removed top margin, reduced bottom from 20px to 5px */
+    line-height: 1.2; 
     margin-top: 0;
     margin-bottom: 8px; 
 }
@@ -100,14 +100,27 @@ button:hover, .btn:hover {
     transform: translateY(-2px); /* Slight lift effect */
 }
 
+/* Search again button */
+a.btn {
+    background-color: transparent; 
+    border: 1px solid #33344a;     
+    color: #a0a0b0;                
+    margin-top: 10px;              
+}
+
+a.btn:hover {
+    background-color: #1f2030;     
+    border-color: #7c4dff;         
+    color: #ffffff;                
+    transform: translateY(-2px);
+}
+
 /* 7. Image Styling */
 .card img {
     border-radius: 8px;
     max-width: 100%;
     height: auto;
     box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-    
-    /* CHANGED: Reduced from 20px to 10px */
     margin-bottom: 10px; 
 }
 
@@ -124,7 +137,6 @@ button:hover, .btn:hover {
 }
 
 /* --- Expander / Read More Styling --- */
-
 .synopsis-container {
     margin-top: 10px;
     border-top: 1px solid #33344a; /* Separator line */
@@ -132,7 +144,6 @@ button:hover, .btn:hover {
     text-align: left; /* Synopsis is better left-aligned */
 }
 
-/* State A: Collapsed (The default) */
 .synopsis-collapsed {
     display: -webkit-box;
     -webkit-line-clamp: 3; /* Show only 3 lines */
@@ -143,14 +154,12 @@ button:hover, .btn:hover {
     margin-bottom: 5px;
 }
 
-/* State B: Expanded (When button is clicked) */
 .synopsis-expanded {
     display: block; /* Show everything */
     color: #e0e0e0;
     margin-bottom: 10px;
 }
 
-/* The 'Read More' Link Button */
 .read-more-btn {
     background: none;
     border: none;
@@ -160,126 +169,122 @@ button:hover, .btn:hover {
     font-size: 0.9rem;
     font-weight: bold;
     text-decoration: none;
-    width: auto; /* Don't stretch across the screen */
+    width: auto; 
     text-align: left;
 }
 
 .read-more-btn:hover {
     background: none;
-    color: #9e7dff; /* Lighter purple on hover */
-    transform: none; /* No movement needed here */
+    color: #9e7dff; 
+    transform: none; 
     text-decoration: underline;
 }
 
-/* Search again button */
-a.btn {
-    background-color: transparent; /* No background */
-    border: 1px solid #33344a;     /* Subtle border */
-    color: #a0a0b0;                /* Muted text color */
-    margin-top: 10px;              /* Small gap */
-}
-
-a.btn:hover {
-    background-color: #1f2030;     /* Slight highlight on hover */
-    border-color: #7c4dff;         /* Purple border on hover */
-    color: #ffffff;                /* White text on hover */
-    transform: translateY(-2px);
-}
-
 /* --- Side-by-Side Score Grid --- */
-
 .score-row {
-    display: flex;             /* This makes them sit side-by-side */
-    gap: 15px;                 /* Space between the two boxes */
-    margin-bottom: 20px;       /* Space below the boxes */
+    display: flex;             
+    gap: 15px;                 
+    margin-bottom: 20px;       
     justify-content: center;
 }
 
 .score-box {
-    background-color: #0b0c15; /* Darker than the main card for contrast */
+    background-color: #0b0c15; 
     border: 1px solid #33344a;
     border-radius: 10px;
     padding: 15px 10px;
-    flex: 1;                   /* This ensures they are both equal width */
+    flex: 1;                   
     text-align: center;
-    box-shadow: inset 0 0 10px rgba(0,0,0,0.5); /* Inner shadow for depth */
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.5); 
 }
 
 .score-label {
-    display: block;            /* Put label on its own line */
+    display: block;            
     font-size: 0.85rem;
-    color: #a0a0b0;            /* Muted text */
+    color: #a0a0b0;            
     margin-bottom: 5px;
-    text-transform: uppercase; /* Makes it look like a header */
+    text-transform: uppercase; 
     letter-spacing: 1px;
 }
 
 .score-value {
-    display: block;            /* Put number on its own line */
+    display: block;            
     font-size: 1.4rem;
     font-weight: bold;
     color: #ffffff;
 }
 
-/* The container that holds all cards */
+/* --- Search Results Grid & Cards --- */
 .results-grid {
-    display: flex;             /* This aligns items horizontally */
-    flex-wrap: wrap;           /* This lets them drop to the next line if screen is narrow */
-    justify-content: center;   /* Centers the grid on the screen */
-    gap: 20px;                 /* Adds space between the cards */
-    padding: 20px;             /* Adds breathing room around the edges */
+    display: flex;             
+    flex-wrap: wrap;           
+    justify-content: center;   
+    gap: 20px;                 
+    padding: 20px;             
 }
 
-/* This class makes a button look like a card */
 .search-card-clickable {
-    /* 1. Reset default button styles */
     background: none;
     border: none;
     padding: 0;
     cursor: pointer;
-    font-family: inherit; /* Keep your font */
-
-    /* 2. Apply the Card Look */
+    font-family: inherit; 
     background-color: #151621;
     border: 1px solid #33344a;
     border-radius: 10px;
     width: 200px;
+    
+    height: 100%; 
+    
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
     transition: transform 0.2s, box-shadow 0.2s;
-    overflow: hidden; /* Keeps content inside rounded corners */
+    overflow: hidden; 
 }
 
-/* Hover Effect: Lift the whole card up */
 .search-card-clickable:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(124, 77, 255, 0.3); /* Purple glow */
+    box-shadow: 0 10px 25px rgba(124, 77, 255, 0.3); 
     border-color: #7c4dff;
 }
 
-/* Image Styling */
 .search-card-clickable img {
     width: 100%;
     height: 250px;
     object-fit: cover;
-    margin-bottom: 0; /* Image touches the text box directly */
+    margin-bottom: 0; 
 }
 
-/* Text Container Styling */
 .search-info {
     padding: 15px;
     width: 100%;
-    box-sizing: border-box; /* Ensures padding doesn't break width */
+    box-sizing: border-box; 
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-grow: 1; 
 }
 
 .search-info h3 {
     font-size: 1rem;
     margin: 5px 0;
     color: #fff;
-    pointer-events: none; /* Prevents text selection flickering on click */
+    pointer-events: none; 
+    
+    /* NEW: Line Clamping Magic */
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Change to 3 if you prefer slightly taller text areas */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    
+    /* Optional: A fixed line height makes sure even 1-line titles take up the same space as 2-line titles */
+    line-height: 1.4;
+    min-height: 2.8em; /* 1.4 x 2 lines */
 }
 
 .search-info p {
@@ -290,20 +295,14 @@ a.btn:hover {
 }
 
 /* --- Metadata (Status & Genres) --- */
-
 .metadata-row {
     display: flex;
     flex-direction: column;
     align-items: center;
-    
-    /* CHANGED: Reduced gap between Status and Genres to 5px */
     gap: 5px; 
-    
-    /* Keeps a healthy gap before the Score starts */
     margin-bottom: 25px; 
 }
 
-/* Status Badge (e.g., "Finished Airing") */
 .status-badge {
     background-color: #2c2d42;
     color: #a0a0b0;
@@ -315,41 +314,204 @@ a.btn:hover {
     border: 1px solid #33344a;
 }
 
-/* Container for the Genre tags */
-.genre-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 8px; /* Space between tags */
-    margin-top: 10px;
-}
-
-/* Individual Genre Tag */
-.genre-tag {
-    background-color: rgba(124, 77, 255, 0.1); 
-    color: #9e7dff;       
-    border: 1px solid #7c4dff;
-    padding: 4px 10px;
-    
-    /* CHANGED: From 15px (Pill) to 6px (Curved Rectangle) */
-    border-radius: 6px;
-    
-    font-size: 0.8rem;
-    font-weight: 500;
-}
-
-/* The container for the new info line */
 .sub-details {
-    color: #a0a0b0;  /* Muted grey */
+    color: #a0a0b0;  
     font-size: 0.9rem;
-    margin-top: 5px; /* Tiny space below status */
+    margin-top: 5px; 
     display: flex;
     align-items: center;
     gap: 8px;
 }
 
-/* The dot between the two items */
 .separator {
-    color: #33344a; /* Very subtle dark dot */
+    color: #33344a; 
     font-weight: bold;
+}
+
+.genre-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px; 
+    margin-top: 10px;
+}
+
+.genre-tag {
+    background-color: rgba(124, 77, 255, 0.1); 
+    color: #9e7dff;       
+    border: 1px solid #7c4dff;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+/* =========================================
+   NEW: BOTTOM RECOMMENDATIONS SECTION 
+   ========================================= */
+
+/* Creates a wrapper to hold the main card and recommendations in a vertical column */
+.page-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.section-header {
+    text-align: left; 
+    margin-bottom: 25px;
+    
+    /* NEW: Sticky Header Magic */
+    position: sticky;
+    top: 0; /* Sticks to the very top of the window */
+    background-color: #0b0c15; /* Matches your midnight background */
+    z-index: 10; /* Keeps it above the scrolling cards */
+    
+    /* Adds a little padding so it looks clean when cards slide under it */
+    padding-top: 20px;
+    padding-bottom: 10px;
+    margin-top: -20px; 
+}
+
+.section-header h2 {
+    color: #ffffff;
+    font-size: 1.5rem;
+    margin: 0 0 8px 0;
+    font-weight: 600;
+}
+
+.header-line {
+    border: none;
+    height: 2px;
+    background: linear-gradient(90deg, #7c4dff, transparent); 
+    margin: 0;
+    width: 80px; 
+}
+
+.mini-card {
+    width: 100%; 
+}
+
+.mini-card img {
+    height: 230px;
+    object-fit: cover;
+}
+
+/* --- New Split Badge Design --- */
+.rec-badge {
+    display: inline-flex; 
+    
+    border-radius: 6px; 
+    overflow: hidden; 
+    border: 1px solid rgba(124, 77, 255, 0.4);
+    
+    /* Optional: center it horizontally */
+    align-self: center; 
+    margin-top: 15px;
+}
+
+.rec-label {
+    background: rgba(124, 77, 255, 0.1);
+    padding: 4px 8px;
+    font-size: 0.7rem;
+    color: #a3a3cc;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+}
+
+.rec-value {
+    background: rgba(124, 77, 255, 0.3);
+    padding: 4px 10px;
+    font-size: 0.85rem;
+    color: #ffffff;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}
+
+/* =========================================
+   STICKY SIDE-BY-SIDE LAYOUT
+   ========================================= */
+
+/* The giant wrapper holding both columns */
+.page-split-layout {
+    display: flex;
+    flex-direction: row;
+    justify-content: center; 
+    
+    /* CRITICAL: flex-start prevents the left column from stretching 
+       to match the right column's height. Sticky won't work without this! */
+    align-items: flex-start; 
+    
+    gap: 50px;
+    max-width: 1400px; /* Gives plenty of room for both sections */
+    margin: 40px auto;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+/* LEFT COLUMN: The Main Anime Card */
+.left-column {
+    flex: 0 0 auto; 
+    
+    /* THE MAGIC TRICK */
+    position: sticky;
+    top: 40px; /* It locks in place 40px from the top of the browser window */
+    z-index: 10; /* Ensures it stays on top of anything else while scrolling */
+}
+
+/* RIGHT COLUMN: The Recommendations */
+.right-column {
+    flex: 1; /* Takes up all remaining space */
+    max-width: 900px;
+}
+
+/* --- Vertical Recommendations Grid --- */
+.recs-grid-vertical {
+    display: grid;
+    /* This stops them from stretching full width! */
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 20px;
+}
+
+.mini-card {
+    width: 100%;
+}
+
+.mini-card img {
+    height: 230px;
+    object-fit: cover;
+}
+
+/* --- The Split --- */
+.rec-badge {
+    display: inline-flex;
+    margin-top: 10px;
+    border-radius: 6px; 
+    overflow: hidden; 
+    border: 1px solid rgba(124, 77, 255, 0.4);
+}
+
+.rec-label {
+    background: rgba(124, 77, 255, 0.1);
+    padding: 4px 8px;
+    font-size: 0.7rem;
+    color: #a3a3cc;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+}
+
+.rec-value {
+    background: rgba(124, 77, 255, 0.3);
+    padding: 4px 10px;
+    font-size: 0.85rem;
+    color: #ffffff;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
 }
