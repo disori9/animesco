@@ -101,6 +101,7 @@ def get_anilist_recommendations(mal_id):
 
 			recommendation['mal_id'] = rec_info['idMal']
 			recommendation['title'] = rec_info['title']['romaji']
+			recommendation['english_title'] = rec_info['title']['english']
 			recommendation['cover'] = rec_info['coverImage']['large']
 			recommendation['votes'] = rating
 

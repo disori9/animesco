@@ -22,6 +22,7 @@ def get_smart_recommendations(mal_id):
         # Did MAL also recommend this?
         if current_id in combined:
             combined[current_id]['smart_score'] += (item['votes'] + 100)
+            combined[current_id]['english_title'] = item['english_title']
             
         else:
             item['smart_score'] = item['votes']
