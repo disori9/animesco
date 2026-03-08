@@ -527,3 +527,145 @@ a.btn:hover {
     display: flex;
     align-items: center;
 }
+
+
+/* =========================================
+   TRAILER MODAL OVERLAY
+   ========================================= */
+
+/* The dark background overlay */
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1000; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    background-color: rgba(0,0,0,0.85); 
+    backdrop-filter: blur(5px); /* Cool background blur */
+    align-items: center; 
+    justify-content: center; 
+}
+
+/* The actual box holding the video */
+.modal-content {
+    position: relative;
+    padding: 0;
+    border: 1px solid #33344a;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 800px;
+    box-shadow: 0 10px 50px rgba(0,0,0,0.8);
+    background-color: #000;
+    overflow: hidden; /* This keeps the video corners rounded! */
+}
+
+/* Floating X button above the video */
+button.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 36px;     /* Small fixed width */
+    height: 36px;    /* Small fixed height */
+    padding: 0;      /* Removes the global button padding */
+    background-color: rgba(0, 0, 0, 0.6); /* Dark translucent background */
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%; /* Makes it a perfect circle */
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 1001; /* Keeps it above the video */
+    transition: all 0.2s ease;
+}
+
+button.close-btn:hover {
+    background-color: #ff4d4d; /* Turns red when hovered */
+    border-color: #ff4d4d;
+    transform: scale(1.1); /* Slight pop effect */
+}
+
+/* Forces the YouTube iframe to maintain 16:9 ratio */
+.iframe-container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%; /* 16:9 Widescreen Ratio */
+    height: 0;
+    background-color: #000; /* Stops the gray flash */
+}
+
+.iframe-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    z-index: 2; /* Sits in front of the loading text */
+    background-color: transparent; 
+}
+
+/* =========================================
+   SLEEK ACTION BUTTONS
+   ========================================= */
+.button-group {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+    justify-content: center;
+}
+
+/* Base style for both buttons */
+.action-btn {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    flex: 1; /* Makes them equal width */
+    max-width: 150px; /* Stops them from getting huge */
+    text-align: center;
+    font-weight: 500;
+}
+
+/* Purple Ghost Button for Trailer */
+.watch-btn {
+    background-color: transparent;
+    border: 1px solid #7c4dff;
+    color: #7c4dff;
+}
+
+.watch-btn:hover {
+    background-color: rgba(124, 77, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+/* Gray Ghost Button for Search Another */
+.secondary-btn {
+    background-color: transparent;
+    border: 1px solid #33344a;
+    color: #a0a0b0;
+}
+
+.secondary-btn:hover {
+    border-color: #a0a0b0;
+    color: #ffffff;
+    transform: translateY(-2px);
+}
+
+.loading-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #a0a0b0;
+    font-size: 1.1rem;
+    font-weight: 500;
+    z-index: 1; /* Sits at the back */
+    pointer-events: none; /* Prevents it from interfering with clicks */
+    letter-spacing: 1px;
+}

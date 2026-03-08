@@ -54,7 +54,15 @@
                     </div>
                 </div>
 
-                <a href="/" class="btn">Search Another</a>
+                <div class="button-group">
+                    {% if trailer_url %}
+                        <button type="button" class="action-btn watch-btn" onclick="openTrailer('{{ trailer_url }}')">
+                            ▶ Watch Trailer
+                        </button>
+                    {% endif %}
+                    
+                    <a href="/" class="action-btn secondary-btn">Search Another</a>
+                </div>
             </div>
         </div>
         <div class="right-column">
@@ -87,6 +95,18 @@
         </div>
     </div>
 
+    <div id="trailerModal" class="modal" onclick="closeTrailer()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            
+            <button class="close-btn" onclick="closeTrailer()">&#10005;</button>
+            
+            <div class="iframe-container">
+                <div class="loading-text">Loading trailer...</div>
+                <iframe id="trailerIframe" src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
     <script>
         function toggleSynopsis() {
             var text = document.getElementById("synopsisText");
@@ -101,6 +121,23 @@
                 text.classList.add("synopsis-collapsed");
                 btn.innerText = "Read More"; 
             }
+        }
+
+        function openTrailer(videoUrl) {
+            // 1. Unhide the modal by changing display from 'none' to 'flex'
+            document.getElementById('trailerModal').style.display = 'flex';
+            
+            // 2. Inject the URL into the iframe and tell YouTube to autoplay
+            document.getElementById('trailerIframe').src = videoUrl + "?autoplay=1"; 
+        }
+
+        function closeTrailer() {
+            // 1. Hide the modal again
+            document.getElementById('trailerModal').style.display = 'none';
+            
+            // 2. CRITICAL: Empty the source! 
+            // If you don't do this, the video will keep playing audio invisibly.
+            document.getElementById('trailerIframe').src = ""; 
         }
     </script>
 </body>
