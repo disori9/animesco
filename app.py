@@ -29,6 +29,7 @@ def score():
         mal_status = mal_data["status"]
         mal_episodes = mal_data["episodes"]
         mal_date = mal_data["aired"]["string"]
+        eng_title = mal_data["title_english"]
         
         mal_genres = []
         for genre in mal_data["genres"]:
@@ -45,7 +46,7 @@ def score():
         return render_template('selected_anime.html', anime_title=anime_title, average_score=average_score, mal_cover=mal_cover,
                                mal_score=mal_score, anilist_score=anilist_score, synopsis=synopsis, mal_status=mal_status, mal_genres=mal_genres,
                                mal_episodes=mal_episodes, mal_date=mal_date,
-                               recommendations=recommendations)
+                               recommendations=recommendations, eng_title=eng_title)
     except ValueError as e:
         return f"<h1>Error</h1> <p>{e}</p> <a href='/'>Go Back</a>"
     except Exception as e:
