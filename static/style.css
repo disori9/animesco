@@ -374,7 +374,6 @@ a.btn:hover {
     text-align: left; 
     margin-bottom: 25px;
     
-    /* NEW: Sticky Header Magic */
     position: sticky;
     top: 0; /* Sticks to the very top of the window */
     background-color: #0b0c15; /* Matches your midnight background */
@@ -484,7 +483,7 @@ a.btn:hover {
 /* --- Vertical Recommendations Grid --- */
 .recs-grid-vertical {
     display: grid;
-    /* This stops them from stretching full width! */
+    /* This stops them from stretching full width */
     grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
     gap: 20px;
 }
@@ -558,7 +557,7 @@ a.btn:hover {
     max-width: 800px;
     box-shadow: 0 10px 50px rgba(0,0,0,0.8);
     background-color: #000;
-    overflow: hidden; /* This keeps the video corners rounded! */
+    overflow: hidden; /* This keeps the video corners rounded */
 }
 
 /* Floating X button above the video */
@@ -741,4 +740,61 @@ button.close-btn:hover {
 /* We use display: flex on hover instead of block to maintain the centering */
 .slot:hover .remove-btn {
     display: flex; 
+}
+
+/* =========================================
+   HOME PAGE HUB LAYOUT
+   ========================================= */
+.hub-container {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    align-items: stretch; /* Makes both cards the exact same height */
+    flex-wrap: wrap; /* Allows it to stack on mobile phones */
+}
+
+.hub-card {
+    background-color: #0b0c15;
+    border: 1px solid #33344a;
+    border-radius: 12px;
+    padding: 35px 30px;
+    flex: 1;
+    min-width: 280px;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+
+.hub-card:hover {
+    transform: translateY(-5px);
+    border-color: #7c4dff;
+    box-shadow: 0 10px 25px rgba(124, 77, 255, 0.15);
+}
+
+.hub-card h2 {
+    margin-top: 0;
+    color: #ffffff;
+    font-size: 1.6rem;
+    margin-bottom: 10px;
+}
+
+.hub-card p {
+    font-size: 0.95rem;
+    color: #a0a0b0;
+    margin-bottom: 30px;
+    line-height: 1.5;
+}
+
+.hub-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: auto; /* Pushes the form to the absolute bottom of the card */
+}
+
+.hub-form input[type="text"] {
+    width: 100%;
+    margin-bottom: 0; /* Removes global input margin so the gap handles it */
+    box-sizing: border-box;
 }
