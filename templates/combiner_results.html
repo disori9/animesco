@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Combiner Results - Anime Scorer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    
+    <div class="page-wrapper" style="margin-top: 40px;">
+        <div class="section-header" style="text-align: center;">
+            <h1 style="font-size: 2.5rem;">Smart Recommendations</h1>
+            <p style="margin-bottom: 20px;">Based on the 3 shows you selected, here is the ultimate overlap.</p>
+            
+            <div style="text-align: center; margin-bottom: 30px;">
+                <a href="/combiner" class="btn" style="width: auto; margin-right: 10px;">Try Another Combo</a>
+                <a href="/" class="btn" style="background-color: transparent; border: 1px solid #33344a; width: auto;">Back to Home</a>
+            </div>
+
+            <hr class="header-line" style="margin: 0 auto; width: 100px;">
+        </div>
+        
+        <div class="recommendations-container-bottom" style="margin-top: 30px;">
+            <div class="recs-grid-vertical">
+                {% for rec in recommendations %}
+                <form action="/score" method="POST" style="display: contents;">
+                    <input type="hidden" name="mal_id" value="{{ rec.mal_id }}">
+                    <input type="hidden" name="anime_title" value="{{ rec.title }}">
+                    
+                    <button type="submit" class="search-card-clickable mini-card">
+                        <img src="{{ rec.cover }}" alt="cover">
+                        <div class="search-info">
+                            <h3>{{ rec.title }}</h3>
+                            
+                            <div style="margin-top: auto; display: flex; flex-direction: column; gap: 5px;">
+                                
+                                {% if rec.overlap == max_overlap %}
+                                    <div class="rec-badge" style="border-color: #ffd700;">
+                                        <span class="rec-label" style="background: rgba(255, 215, 0, 0.1); color: #ffd700;">Overlap</span>
+                                        <span class="rec-value" style="background: rgba(255, 215, 0, 0.3);">
+                                            {% if max_overlap == 3 %}All 3 Shows!{% else %}Both Shows!{% endif %}
+                                        </span>
+                                    </div>
+                                {% elif max_overlap == 3 and rec.overlap == 2 %}
+                                    <div class="rec-badge" style="border-color: #00e676; margin-bottom: 2px;">
+                                        <span class="rec-label" style="background: rgba(0, 230, 118, 0.1); color: #00e676;">Overlap</span>
+                                        <span class="rec-value" style="background: rgba(0, 230, 118, 0.3);">2 Shows</span>
+                                    </div>
+                                {% endif %}
+
+                                {% if rec.overlap > 1 %}
+                                    <p style="font-size: 0.65rem; color: #a0a0b0; margin: 0; line-height: 1.2; text-align: center;">
+                                        {{ rec.recommended_by[0] }} <br><span style="color: #00e676;">&amp;</span> {{ rec.recommended_by[1] }}
+                                        {% if rec.overlap == 3 %}<br><span style="color: #ffd700;">&amp;</span> {{ rec.recommended_by[2] }}{% endif %}
+                                    </p>
+                                {% endif %}
+
+                                <div class="rec-badge">
+                                    <span class="rec-label">Combo Score</span>
+                                    <span class="rec-value">{{ rec.smart_score }}</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </button>
+                </form>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 40px; margin-bottom: 40px;">
+            <a href="/combiner" class="btn" style="width: auto; margin-right: 10px;">Try Another Combo</a>
+            <a href="/" class="btn" style="background-color: transparent; border: 1px solid #33344a; width: auto;">Back to Home</a>
+        </div>
+    </div>
+
+</body>
+</html>

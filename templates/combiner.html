@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smart Combiner</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="card-wide">
+        <h1>The Smart Combiner</h1>
+        <p>Select exactly 3 anime. We will analyze their recommendations and find the ultimate overlap.</p>
+
+        <div class="slots-container" id="slotsContainer">
+            <div class="slot" id="slot-0">1</div>
+            <div class="slot" id="slot-1">2</div>
+            <div class="slot" id="slot-2">3</div>
+        </div>
+
+        <form id="combinerForm" action="/smart_combine" method="POST" style="display: none;" onsubmit="showLoadingState()">
+            <input type="hidden" name="anime1_id" id="input1">
+            <input type="hidden" name="anime2_id" id="input2">
+            <input type="hidden" name="anime3_id" id="input3">
+            
+            <input type="hidden" name="anime1_title" id="title1">
+            <input type="hidden" name="anime2_title" id="title2">
+            <input type="hidden" name="anime3_title" id="title3">
+
+            <button type="submit" id="generateBtn" class="btn" style="background-color: #7c4dff; font-size: 1.2rem; padding: 15px;">
+                Generate Smart Recommendations
+            </button>
+        </form>
+
+        <hr class="header-line" style="margin: 30px auto; width: 100%;">
+
+        <h2>Search Anime to Add:</h2>
+        <div style="display: flex; gap: 10px; justify-content: center; margin-bottom: 20px;">
+            <input type="text" id="searchInput" placeholder="Search..." style="margin: 0; width: 60%;" onkeypress="handleEnter(event)">
+            <button class="btn" style="width: auto;" onclick="searchAnime()">Search</button>
+        </div>
+
+        <div class="recs-grid-vertical" id="searchResults"></div>
+
+        <a href="/" class="btn" style="width: auto; margin-top: 20px;">Back to Standard Search</a>
+    </div>
+
+    <script>
+        // We will store our 3 chosen anime in this array
+        let chosenAnime = []; 
+
+        // 1. Fetch data directly from Jikan (No Flask needed for this part!)
+        async function searchAnime() {
+            const query = document.getElementById("searchInput").value;
+            if (!query) return;
+
+            const resultsContainer = document.getElementById("searchResults");
+            resultsContainer.innerHTML = "<p>Loading...</p>"; // Loading text
+
+            // Talk directly to the Jikan API
+            const response = await fetch(`https://api.jikan.moe/v4/anime?q=${query}&limit=6`);
+            const data = await response.json();
+
+            // Clear the loading text
+            resultsContainer.innerHTML = "";
+
+            // Loop through the results and draw mini-cards
+            data.data.forEach(anime => {
+                const title = anime.title_english || anime.title;
+                const img = anime.images.jpg.large_image_url;
+                const id = anime.mal_id;
+
+                // Create the card HTML
+                // Notice we pass the id, title, and img to the addAnime() function!
+                const cardHTML = `
+                    <button class="search-card-clickable mini-card" onclick="addAnime(${id}, '${title.replace(/'/g, "\\'")}', '${img}')">
+                        <img src="${img}" alt="cover">
+                        <div class="search-info">
+                            <h3>${title}</h3>
+                            <div class="rec-badge"><span class="rec-label">Add to</span><span class="rec-value">Combiner</span></div>
+                        </div>
+                    </button>
+                `;
+                resultsContainer.innerHTML += cardHTML;
+            });
+        }
+
+        // 2. Add an anime to an empty slot
+        function addAnime(id, title, img) {
+            // Check if we already have 3, or if they already added this exact show
+            if (chosenAnime.length >= 3) {
+                alert("You already selected 3 anime!");
+                return;
+            }
+            if (chosenAnime.some(a => a.id === id)) {
+                alert("You already added this anime!");
+                return;
+            }
+
+            // Push it to our array
+            chosenAnime.push({ id, title, img });
+            updateSlotsUI();
+        }
+
+        // 3. Remove an anime if they change their mind
+        function removeAnime(index) {
+            chosenAnime.splice(index, 1); // Removes 1 item at the given index
+            updateSlotsUI();
+        }
+
+        // 4. Draw the UI based on the array
+        function updateSlotsUI() {
+            // Loop through all 3 slots
+            for (let i = 0; i < 3; i++) {
+                const slotDiv = document.getElementById(`slot-${i}`);
+                
+                if (chosenAnime[i]) {
+                    // If an anime exists for this slot, show its image and a remove button
+                    slotDiv.className = "slot filled";
+                    slotDiv.innerHTML = `
+                        <img src="${chosenAnime[i].img}">
+                        <button class="remove-btn" onclick="removeAnime(${i})">&#10005;</button>
+                    `;
+                } else {
+                    // If it's empty, reset it to the number
+                    slotDiv.className = "slot empty";
+                    slotDiv.innerHTML = i + 1;
+                }
+            }
+
+            // If we have exactly 3 anime, fill the hidden form and show the Generate button!
+            const form = document.getElementById("combinerForm");
+            if (chosenAnime.length >= 2) {
+                // We use ternary operators (condition ? true : false) to safely assign values.
+                // If chosenAnime[2] doesn't exist, it just inserts an empty string.
+                document.getElementById("input1").value = chosenAnime[0] ? chosenAnime[0].id : "";
+                document.getElementById("input2").value = chosenAnime[1] ? chosenAnime[1].id : "";
+                document.getElementById("input3").value = chosenAnime[2] ? chosenAnime[2].id : "";
+                
+                document.getElementById("title1").value = chosenAnime[0] ? chosenAnime[0].title : "";
+                document.getElementById("title2").value = chosenAnime[1] ? chosenAnime[1].title : "";
+                document.getElementById("title3").value = chosenAnime[2] ? chosenAnime[2].title : "";
+                
+                form.style.display = "block";
+            } else {
+                form.style.display = "none";
+            }
+        }
+        // 5. Change the button state when they click it
+        function showLoadingState() {
+            const btn = document.getElementById("generateBtn");
+            btn.innerHTML = "Calculating Overlap... ⏳"; // Changes the text
+            btn.style.backgroundColor = "#33344a"; // Dims the button
+            btn.style.pointerEvents = "none"; // Physically prevents double-clicking
+        }
+
+        function handleEnter(event) {
+            if (event.key === "Enter") {
+                event.preventDefault(); // Prevents the browser from accidentally submitting a form
+                searchAnime();
+            }
+        }
+    </script>
+</body>
+</html>
